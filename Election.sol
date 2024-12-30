@@ -38,8 +38,14 @@ contract Election {
         candidatesCount ++;
         candidates[candidatesCount] = Candidate(candidatesCount, _name, 0);
     }
-    function getCandidate() public view returns(string memory) {
-        return candidates[1].name;
+     function getCandidate(uint256 _candidateId) public view returns(string memory) {
+        require(_candidateId > 0 && _candidateId <= candidatesCount, "Invalid Candidate ID");
+         return candidates[_candidateId].name;
+    }
+    function getVoteCount(uint256 _candidateId) external view returns (uint256 voteCount)
+    {
+        require(_candidateId > 0 && _candidateId <= candidatesCount, "Invalid Candidate ID");
+        return candidates[_candidateId].voteCount;
     }
     function vote (uint _candidateId) public {
         // require that they haven't voted before
